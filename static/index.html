@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBJ RattleNIX</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+
+  <!-- Top Glass Header (Compact) -->
+  <header class="glass">
+    <div class="logo-area">
+      <!-- Scaled Tower Broadcast Icon matching footer logo style -->
+      <div class="top-brand-icon-box">
+        <i class="fa-solid fa-tower-broadcast"></i>
+      </div>
+      <div>
+        <div class="logo-title">
+          <span class="title-word font-bazinga title-dbj">DBJ</span>
+          <span class="title-word font-asteroid title-rattle">Rattle</span>
+          <span class="title-word font-bazinga title-nix">NIX</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Badges & Actions -->
+    <div class="header-controls">
+      <!-- Theme Switcher Selector -->
+      <div class="theme-switcher-box" title="Select UI Color Theme">
+        <button type="button" class="theme-btn" data-theme="dark" title="Dark Mode (Classic Deep Dark)">
+          <i class="fa-solid fa-moon"></i> <span>Dark</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme="charcoal" title="Charcoal Mode (Balanced Medium Slate)">
+          <i class="fa-solid fa-circle-half-stroke"></i> <span>Charcoal</span>
+        </button>
+        <button type="button" class="theme-btn" data-theme="light" title="Light Mode (Crisp Clean Bright)">
+          <i class="fa-solid fa-sun"></i> <span>Light</span>
+        </button>
+      </div>
+
+      <div id="rx-tx-badge" class="badge badge-rx">
+        <span class="dot"></span> ● RX LISTENING
+      </div>
+      <button id="btn-open-settings" class="badge badge-settings" title="Radio &amp; Audio Settings">
+        <i class="fa-solid fa-gear"></i> Settings
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Audio Signal, Spectrum Analyzer & Waterfall Card -->
+  <section class="glass-card signal-card">
+    <div class="signal-header">
+      <div style="display: flex; align-items: center; gap: 0.8rem;">
+        <span style="font-weight: 700; color: var(--text-secondary);">Live Mic &amp; Spectrum:</span>
+        <div class="meter-track-mini">
+          <div id="meter-fill" class="meter-fill"></div>
+        </div>
+      </div>
+      <span id="sync-status-label" class="sync-status">RX Standby • Listening on 48 kHz</span>
+    </div>
+    <div class="visualizer-container">
+      <div class="canvas-wrap">
+        <canvas id="spectrum-canvas" width="600" height="70" class="spectrum-canvas"></canvas>
+        <span class="viz-overlay-tag">SPECTRUM (0 - 4 kHz)</span>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="waterfall-canvas" width="600" height="90" class="waterfall-canvas"></canvas>
+        <span class="viz-overlay-tag">WATERFALL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full-Width Single-Screen Communication Stream -->
+  <main class="main-viewport">
+    <section class="stream-panel glass-card">
+      <div class="card-title-bar">
+        <div class="card-title">
+          <span>💬 Communication Stream</span>
+        </div>
+        <div style="display: flex; gap: 0.8rem;">
+          <button id="btn-test-loopback" class="btn-icon">🔁 Loopback Test</button>
+          <button id="btn-clear-chat" class="btn-icon">🗑 Clear Log</button>
+        </div>
+      </div>
+
+      <!-- Scrollable Message Log Area -->
+      <div id="messages-list" class="messages-list">
+      </div>
+
+      <!-- Transmit Input Bar with Emoji Support -->
+      <div class="compose-bar-wrapper">
+        <div class="compose-bar">
+          <div class="emoji-picker-container">
+            <button type="button" id="btn-emoji-toggle" class="btn-emoji-toggle" title="Insert Emoji">😊</button>
+            <div id="emoji-popup" class="emoji-popup hidden">
+              <div class="emoji-grid" id="emoji-grid">
+                <!-- Emojis injected by app.js -->
+              </div>
+            </div>
+          </div>
+          <input type="text" id="quick-message-input" class="compose-input" placeholder="Type a message or URL to transmit over audio/RF..." maxlength="170">
+          <button id="btn-quick-send" class="btn-primary">
+            <span>🔊 Transmit (TX)</span>
+          </button>
+        </div>
+      </div>
+      <div class="char-count-sub">
+        <span id="quick-char-count">0 / 170 bytes</span>
+      </div>
+
+      <!-- URL Shortener Field Query Box (url.w8jae.com) -->
+      <div class="shortener-bar">
+        <div class="shortener-icon" title="URL Shortener via url.w8jae.com">
+          <i class="fa-solid fa-link"></i>
+        </div>
+        <input type="url" id="shortener-url-input" class="shortener-input" placeholder="Paste URL to shorten (url.w8jae.com) &amp; paste into message...">
+        <button type="button" id="btn-shorten-url" class="btn-shorten">
+          <span id="shorten-btn-text"><i class="fa-solid fa-scissors"></i> Shorten &amp; Paste</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Settings Modal (Popup) -->
+  <div id="settings-modal" class="modal-backdrop hidden">
+    <div class="glass-card modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-sliders" style="color: var(--accent-cyan);"></i> Station &amp; Audio Settings
+        </div>
+        <button id="btn-close-settings" class="btn-modal-close" title="Close Settings">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="setting-item">
+          <label class="setting-label" for="callsign-input">Station Callsign:</label>
+          <input type="text" id="callsign-input" class="input-field input-callsign" value="MYCALL" maxlength="10">
+          <span class="setting-hint">Persisted across restarts and sent with all transmissions.</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label" for="carrier-select">Carrier Frequency:</label>
+          <select id="carrier-select" class="select-field modal-select">
+            <option value="1000">1000 Hz</option>
+            <option value="1500" selected>1500 Hz (Standard)</option>
+            <option value="2000">2000 Hz</option>
+            <option value="3500">3500 Hz</option>
+            <option value="7000">7000 Hz</option>
+            <option value="11000">11000 Hz</option>
+            <option value="13000">13000 Hz</option>
+            <option value="16000">16000 Hz</option>
+            <option value="20000">20000 Hz</option>
+          </select>
+          <span class="setting-hint">Center audio carrier frequency for COFDM transmission.</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label" for="bitrate-select">Encoder Bitrate / Modulation:</label>
+          <select id="bitrate-select" class="select-field modal-select">
+            <option value="2">BPSK (Robust / Lower Speed)</option>
+            <option value="4" selected>QPSK (Standard / Balanced Speed)</option>
+            <option value="8">8PSK (High Speed / High SNR)</option>
+          </select>
+          <span class="setting-hint">Modulation scheme and symbol mapping rate for transmission and reception.</span>
+        </div>
+
+        <div class="setting-item checkbox-setting">
+          <label class="checkbox-label" for="fancy-header-check">
+            <input type="checkbox" id="fancy-header-check" class="setting-checkbox" checked>
+            <span class="setting-label">Enable Fancy Header (Visual Spectrum Callsign)</span>
+          </label>
+          <span class="setting-hint">Displays callsign visibly as sub-carrier patterns on waterfalls and spectrum analyzers like Android Rattlegram.</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label" for="input-device-select">Microphone / Audio Input (RX):</label>
+          <select id="input-device-select" class="select-field modal-select"></select>
+          <span class="setting-hint">Used for live feedback meter, COFDM packet decoding, and CW ID detection.</span>
+        </div>
+
+        <div class="setting-item">
+          <label class="setting-label" for="output-device-select">Speaker / Audio Output (TX):</label>
+          <select id="output-device-select" class="select-field modal-select"></select>
+          <span class="setting-hint">Used when transmitting Rattlegram acoustic audio tones.</span>
+        </div>
+
+        <!-- Software Updates / OTA Section -->
+        <div class="setting-item update-setting-card">
+          <div class="update-header-row">
+            <div>
+              <span class="setting-label" style="display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fa-solid fa-cloud-arrow-down" style="color: var(--accent-cyan);"></i> Software Updates (OTA)
+              </span>
+              <span id="ota-current-version" class="ota-version-tag">Version: 1.12</span>
+            </div>
+            <button type="button" id="btn-check-updates" class="btn-check-update">
+              <i class="fa-solid fa-arrows-rotate"></i> <span>Check Now</span>
+            </button>
+          </div>
+          <div id="ota-status-box" class="ota-status-box hidden">
+            <div id="ota-status-text" class="ota-status-text">Checking for updates...</div>
+            <div id="ota-notes-box" class="ota-notes-box hidden"></div>
+            <button type="button" id="btn-apply-update" class="btn-apply-ota hidden">
+              <i class="fa-solid fa-download"></i> <span>Install Update Now</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-save-settings" class="btn-primary" style="width: 100%; justify-content: center;">
+          <span>✓ Save &amp; Apply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exact RxMoni / DevByJae Footer -->
+  <footer class="rxmoni-footer">
+    <div class="rxmoni-footer-inner">
+      <!-- Footer Row 1: DevByJae Logo with Dynamic Cursor Glow -->
+      <div>
+        <a href="https://www.devbyjae.com" target="_blank" rel="noopener noreferrer" class="dev-logo-link">
+          <img id="dev-by-jae-logo" src="/static/Dev_by_Jae_400x145.png" alt="Dev by Jae" class="dev-logo-img">
+        </a>
+      </div>
+
+      <!-- Footer Rows 2 & 3: DevByJae Engineering Labs and Branding -->
+      <div class="rxmoni-footer-text">
+        <p class="labs-text">
+          <a href="https://www.devbyjae.com" target="_blank" rel="noopener noreferrer" class="link-cyan">DevByJae</a> Engineering Labs
+        </p>
+
+        <div class="branding-row">
+          <div class="badge-brand">
+            <div class="brand-icon-box">
+              <i class="fa-solid fa-tower-broadcast"></i>
+            </div>
+            <span class="brand-name">DBJ RattleNIX</span>
+          </div>
+          <span class="bullet-sep">&bull;</span>
+          <span class="copyright-text">&copy; 2026 DBJ RattleNIX from <a href="https://www.devbyjae.com" target="_blank" rel="noopener" class="link-cyan font-medium">DevByJae</a>. All rights reserved.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/rattle_engine.js"></script>
+  <script src="/static/morse_decoder.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181a24"/>
+      <stop offset="100%" stop-color="#0b0d11"/>
+    </linearGradient>
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bgGrad)" stroke="#22c55e" stroke-width="2.5"/>
+  <!-- Radio Antenna -->
+  <line x1="64" y1="20" x2="64" y2="46" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="64" cy="20" r="4.5" fill="#4ade80"/>
+  <!-- Broadcast wave arcs -->
+  <path d="M 48 30 A 20 20 0 0 1 80 30" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 38 22 A 32 32 0 0 1 90 22" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+  <!-- Modem / Chat body -->
+  <rect x="22" y="46" width="84" height="64" rx="14" fill="#1c202a" stroke="#334155" stroke-width="2"/>
+  <!-- Waterfall / OFDM subcarriers -->
+  <rect x="30" y="56" width="68" height="24" rx="6" fill="#0f172a"/>
+  <line x1="36" y1="74" x2="36" y2="62" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="43" y1="74" x2="43" y2="66" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="50" y1="74" x2="50" y2="59" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="57" y1="74" x2="57" y2="64" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="64" y1="74" x2="64" y2="58" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="71" y1="74" x2="71" y2="65" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="78" y1="74" x2="78" y2="60" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="85" y1="74" x2="85" y2="68" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="92" y1="74" x2="92" y2="63" stroke="url(#waveGrad)" stroke-width="3" stroke-linecap="round"/>
+  <!-- Message prompt dot -->
+  <circle cx="38" cy="94" r="3.5" fill="#22c55e"/>
+  <line x1="48" y1="94" x2="90" y2="94" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+</svg>

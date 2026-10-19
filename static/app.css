@@ -1352,3 +1352,40 @@ header {
     text-align: center;
   }
 }
+
+/* -------------------------------------------------------------
+   Footer Desktop Download Action Buttons Flanking DevByJae Logo
+   ------------------------------------------------------------- */
+.footer-centerpiece-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-btn-side {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-btn-side-left {
+  justify-content: flex-end;
+}
+
+.footer-btn-side-right {
+  justify-content: flex-start;
+}
+
+@media (max-width: 768px) {
+  .footer-centerpiece-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .footer-btn-side {
+    justify-content: center;
+  }
+}

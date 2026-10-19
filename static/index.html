@@ -120,34 +120,6 @@
         </button>
       </div>
     </section>
-
-    <!-- Bottom Call To Action Banner: Try Desktop Version -->
-    <section class="desktop-promo-banner glass-card" style="margin-top: 1.25rem;">
-      <div class="promo-banner-inner">
-        <div class="promo-content">
-          <div class="promo-icon-badge">
-            <i class="fa-solid fa-desktop"></i>
-          </div>
-          <div class="promo-text">
-            <h3 class="promo-title">Experience the Full DBJ RattleNIX Desktop Edition</h3>
-            <p class="promo-desc">
-              Get hardware-accelerated soundcard access, background audio monitoring, PipeWire/PulseAudio integration, and standalone offline operation.
-            </p>
-          </div>
-        </div>
-        <div class="promo-actions">
-          <a href="https://devbyjae.com/dbj-rattlenix.exe" class="btn-promo btn-promo-win" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-windows"></i> <span>Windows (.EXE)</span>
-          </a>
-          <a href="https://devbyjae.com/dbj-rattlenix.deb" class="btn-promo btn-promo-linux" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-linux"></i> <span>Linux (.DEB)</span>
-          </a>
-          <a href="https://github.com/jaenulton/DBJ-RattleNIX-Linux" class="btn-promo btn-promo-arch" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-box-archive"></i> <span>Arch Linux</span>
-          </a>
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- Settings Modal (Popup) -->
@@ -222,14 +194,32 @@
     </div>
   </div>
 
-  <!-- Exact RxMoni / DevByJae Footer with Version Tag at Bottom Right -->
+  <!-- Exact RxMoni / DevByJae Footer with Windows & Linux Download Action Buttons Flanking Logo -->
   <footer class="rxmoni-footer">
     <div class="rxmoni-footer-inner">
-      <!-- Footer Row 1: DevByJae Logo with Dynamic Cursor Glow -->
-      <div>
+      <!-- Footer Row 1: DevByJae Logo flanked by Desktop Download Action Buttons -->
+      <div class="footer-centerpiece-row">
+        <!-- Windows download link to the left of the DevByJae logo -->
+        <div class="footer-btn-side footer-btn-side-left">
+          <a href="https://devbyjae.com/dbj-rattlenix.exe" class="btn-promo btn-promo-win" target="_blank" rel="noopener noreferrer" title="Download DBJ RattleNIX for Windows">
+            <i class="fa-brands fa-windows"></i> <span>Windows (.EXE)</span>
+          </a>
+        </div>
+
+        <!-- DevByJae Logo Centerpiece -->
         <a href="https://www.devbyjae.com" target="_blank" rel="noopener noreferrer" class="dev-logo-link">
           <img id="dev-by-jae-logo" src="/static/Dev_by_Jae_400x145.png" alt="Dev by Jae" class="dev-logo-img">
         </a>
+
+        <!-- Two Linux download links to the right of the DevByJae logo -->
+        <div class="footer-btn-side footer-btn-side-right">
+          <a href="https://devbyjae.com/dbj-rattlenix.deb" class="btn-promo btn-promo-linux" target="_blank" rel="noopener noreferrer" title="Download Debian/Ubuntu package">
+            <i class="fa-brands fa-linux"></i> <span>Linux (.DEB)</span>
+          </a>
+          <a href="https://github.com/jaenulton/DBJ-RattleNIX-Linux" class="btn-promo btn-promo-arch" target="_blank" rel="noopener noreferrer" title="Arch Linux PKGBUILD on GitHub">
+            <i class="fa-solid fa-box-archive"></i> <span>Arch Linux</span>
+          </a>
+        </div>
       </div>
 
       <!-- Footer Rows 2 & 3: DevByJae Engineering Labs and Branding -->

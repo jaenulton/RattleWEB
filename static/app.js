@@ -985,3 +985,93 @@ if (btnSave) {
     setTimeout(sendUsageTelemetry, 300);
   });
 }
+
+// -------------------------------------------------------------
+// Image Uploader & Auto-Shortener Implementation (RattleWEB)
+// -------------------------------------------------------------
+function initImageUploader() {
+  const fileInput = document.getElementById("image-file-input");
+  const trigger = document.getElementById("image-upload-trigger");
+  const label = document.getElementById("image-upload-label");
+  const btnUpload = document.getElementById("btn-upload-image");
+  const uploadBtnText = document.getElementById("upload-btn-text");
+  const quickInput = document.getElementById("quick-message-input");
+
+  if (!fileInput || !trigger || !btnUpload) return;
+
+  let selectedFile = null;
+
+  trigger.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    if (e.target.files && e.target.files[0]) {
+      selectedFile = e.target.files[0];
+      label.innerHTML = `<i class="fa-solid fa-file-image"></i> ${selectedFile.name} (${Math.round(selectedFile.size / 1024)} KB)`;
+      label.style.color = "var(--accent-cyan)";
+    }
+  });
+
+  const performUpload = async () => {
+    if (!selectedFile) {
+      fileInput.click();
+      return;
+    }
+
+    btnUpload.disabled = true;
+    if (uploadBtnText) {
+      uploadBtnText.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Uploading...`;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("image", selectedFile);
+
+      const resp = await fetch("https://devbyjae.com/api/rattlenix/upload_image.php", {
+        method: "POST",
+        body: formData
+      });
+
+      const res = await resp.json();
+      if (!res.success) {
+        throw new Error(res.error || "Upload failed");
+      }
+
+      // Automatically paste shortened image URL into message field
+      const shortUrl = res.short_url;
+      if (quickInput) {
+        const curVal = quickInput.value;
+        const start = quickInput.selectionStart ?? curVal.length;
+        const end = quickInput.selectionEnd ?? curVal.length;
+        const needsSpace = start > 0 && !/\s$/.test(curVal.slice(0, start));
+        const insertion = (needsSpace ? " " : "") + shortUrl + " ";
+        quickInput.value = curVal.slice(0, start) + insertion + curVal.slice(end);
+        quickInput.selectionStart = quickInput.selectionEnd = start + insertion.length;
+        quickInput.focus();
+        quickInput.dispatchEvent(new Event("input"));
+      }
+
+      selectedFile = null;
+      fileInput.value = "";
+      label.innerHTML = `<i class="fa-solid fa-circle-check" style="color: var(--accent-green);"></i> Image short URL pasted!`;
+      setTimeout(() => {
+        label.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Choose Image...`;
+        label.style.color = "";
+      }, 3000);
+
+    } catch (err) {
+      alert("Image upload error: " + err.message);
+    } finally {
+      btnUpload.disabled = false;
+      if (uploadBtnText) {
+        uploadBtnText.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Upload &amp; Paste`;
+      }
+    }
+  };
+
+  btnUpload.addEventListener("click", performUpload);
+}
+
+// Ensure initImageUploader is called on page load
+setTimeout(initImageUploader, 500);

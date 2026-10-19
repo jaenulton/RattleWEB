@@ -109,16 +109,34 @@
         </div>
       </div>
 
-      <!-- URL Shortener & Link Tracking Section -->
-      <div class="shortener-bar">
-        <div class="shortener-icon">
-          <i class="fa-solid fa-link"></i>
+            <!-- Dual Tools: 50% URL Shortener + 50% Image Uploader & Shortener -->
+      <div class="tools-dual-row">
+        <!-- Left: URL Shortener Field (50% Width) -->
+        <div class="shortener-bar tool-half">
+          <div class="shortener-icon" title="URL Shortener via url.w8jae.com">
+            <i class="fa-solid fa-link"></i>
+          </div>
+          <input type="url" id="shortener-url-input" class="shortener-input" placeholder="Paste URL to shorten...">
+          <button type="button" id="btn-shorten-url" class="btn-shorten" title="Shorten URL &amp; Paste to Message">
+            <span id="shorten-btn-text"><i class="fa-solid fa-scissors"></i> Shorten</span>
+          </button>
         </div>
-        <input type="url" id="shortener-url-input" class="shortener-input" placeholder="Paste URL to shorten (url.w8jae.com) &amp; paste into message...">
-        <button type="button" id="btn-shorten-url" class="btn-shorten">
-          <span id="shorten-btn-text"><i class="fa-solid fa-scissors"></i> Shorten &amp; Paste</span>
-        </button>
+
+        <!-- Right: Image Upload & Shorten Field (50% Width) -->
+        <div class="image-uploader-bar tool-half">
+          <div class="uploader-icon" title="Upload Image to Host &amp; Broadcast">
+            <i class="fa-solid fa-image"></i>
+          </div>
+          <input type="file" id="image-file-input" accept="image/jpeg,image/png,image/gif,image/webp" style="display: none;">
+          <div id="image-upload-trigger" class="image-upload-trigger" title="Click to choose image from your computer">
+            <span id="image-upload-label" class="image-upload-label"><i class="fa-solid fa-cloud-arrow-up"></i> Choose Image...</span>
+          </div>
+          <button type="button" id="btn-upload-image" class="btn-upload-image" title="Upload Image, Shorten &amp; Paste Link">
+            <span id="upload-btn-text"><i class="fa-solid fa-paper-plane"></i> Upload &amp; Paste</span>
+          </button>
+        </div>
       </div>
+
     </section>
   </main>
 
@@ -242,7 +260,7 @@
 
       <!-- Persistent Bottom Right Version Display -->
       <div class="footer-version-tag">
-        <span class="version-label">v1.13 (WebAssembly)</span>
+        <span class="version-label">v1.14 (WebAssembly)</span>
       </div>
     </div>
   </footer>

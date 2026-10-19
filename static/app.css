@@ -1435,3 +1435,111 @@ header {
     margin: 0.5rem 0;
   }
 }
+
+/* Dual Tools: 50% URL Shortener + 50% Image Uploader & Shortener */
+.tools-dual-row {
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+  margin-top: 0.6rem;
+  flex-shrink: 0;
+}
+
+.tool-half {
+  flex: 1 1 50%;
+  width: 50%;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  background: var(--input-bg);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-md);
+  padding: 0.45rem 0.8rem;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.tool-half:focus-within {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.2);
+}
+
+.image-uploader-bar {
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.image-uploader-bar:focus-within,
+.image-uploader-bar.dragover {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+
+.uploader-icon {
+  color: var(--accent-purple);
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(168, 85, 247, 0.15);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.image-upload-trigger {
+  flex: 1;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.image-upload-trigger:hover .image-upload-label {
+  color: var(--accent-cyan);
+}
+
+.image-upload-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-upload-image {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 10px rgba(147, 51, 234, 0.35);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-upload-image:hover {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.5);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .tools-dual-row {
+    flex-direction: column;
+  }
+  .tool-half {
+    width: 100%;
+    flex: 1 1 100%;
+  }
+}

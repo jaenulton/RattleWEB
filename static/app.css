@@ -1389,3 +1389,49 @@ header {
     justify-content: center;
   }
 }
+
+/* Force desktop download action buttons to the far left and far right of the footer */
+.footer-centerpiece-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 0.75rem auto;
+  padding: 0 1rem;
+}
+
+.footer-btn-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.footer-btn-side-left {
+  justify-content: flex-start !important;
+}
+
+.footer-btn-side-right {
+  justify-content: flex-end !important;
+}
+
+.dev-logo-link {
+  flex-shrink: 0;
+  margin: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .footer-centerpiece-row {
+    flex-direction: column;
+    justify-content: center !important;
+    gap: 1rem;
+    padding: 0;
+  }
+  .footer-btn-side-left,
+  .footer-btn-side-right {
+    justify-content: center !important;
+  }
+  .dev-logo-link {
+    margin: 0.5rem 0;
+  }
+}

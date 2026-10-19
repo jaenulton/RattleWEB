@@ -955,3 +955,33 @@ function renderVisualizerLoop(now) {
 
   requestAnimationFrame(renderVisualizerLoop);
 }
+
+// -------------------------------------------------------------
+// Cross-Platform Client Telemetry Logging
+// -------------------------------------------------------------
+function sendUsageTelemetry() {
+  try {
+    const cs = callsign || localStorage.getItem("dbj_rattlenix_callsign") || "ANONYMOUS";
+    fetch("https://devbyjae.com/api/rattlenix/log_usage.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        callsign: cs,
+        platform: "web",
+        version: "1.13"
+      }),
+      mode: "cors"
+    }).catch(() => {});
+  } catch (e) {}
+}
+
+// Send telemetry on startup and when callsign is saved
+setTimeout(sendUsageTelemetry, 1500);
+
+// Also hook into save button if exists
+const btnSave = document.getElementById("btn-save-settings");
+if (btnSave) {
+  btnSave.addEventListener("click", () => {
+    setTimeout(sendUsageTelemetry, 300);
+  });
+}

@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DBJ RattleWEB</title>
-  <link rel="stylesheet" href="/static/app.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/app.css?v=1.15">
   <link rel="icon" type="image/svg+xml" href="/static/icon.svg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="manifest" href="/static/manifest.json">
@@ -29,17 +32,18 @@
 
     <!-- Header Badges & Actions -->
     <div class="header-controls">
-      <!-- Theme Switcher Selector -->
-      <div class="theme-switcher-box" title="Select UI Color Theme">
-        <button type="button" class="theme-btn" data-theme="dark" title="Dark Mode (Classic Deep Dark)">
-          <i class="fa-solid fa-moon"></i> <span>Dark</span>
-        </button>
-        <button type="button" class="theme-btn" data-theme="charcoal" title="Charcoal Mode (Balanced Medium Slate)">
-          <i class="fa-solid fa-circle-half-stroke"></i> <span>Charcoal</span>
-        </button>
-        <button type="button" class="theme-btn" data-theme="light" title="Light Mode (Crisp Clean Bright)">
-          <i class="fa-solid fa-sun"></i> <span>Light</span>
-        </button>
+      <!-- Theme Switcher Dropdown Menu -->
+      <div class="theme-select-wrapper" title="Select UI Color Theme">
+        <i class="fa-solid fa-palette theme-select-icon"></i>
+        <select id="theme-select" class="theme-dropdown" aria-label="Theme Selection">
+          <option value="dark">Dark</option>
+          <option value="charcoal">Charcoal</option>
+          <option value="light">Light</option>
+          <option value="neo">Neo</option>
+          <option value="carribean">Carribean</option>
+          <option value="osaka">Osaka</option>
+        </select>
+        <i class="fa-solid fa-chevron-down theme-select-arrow"></i>
       </div>
 
       <div id="rx-tx-badge" class="badge badge-rx">
@@ -260,13 +264,13 @@
 
       <!-- Persistent Bottom Right Version Display -->
       <div class="footer-version-tag">
-        <span class="version-label">v1.14 (WebAssembly)</span>
+        <span class="version-label">v1.15 (WebAssembly)</span>
       </div>
     </div>
   </footer>
 
   <script src="/static/rattle_engine.js"></script>
   <script src="/static/morse_decoder.js"></script>
-  <script src="/static/app.js"></script>
+  <script src="/static/app.js?v=1.15"></script>
 </body>
 </html>

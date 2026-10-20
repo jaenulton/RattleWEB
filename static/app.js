@@ -439,19 +439,24 @@ function setupUIEvents() {
 }
 
 function initThemeSwitcher() {
+  const themeSelect = document.getElementById("theme-select");
   const themeButtons = document.querySelectorAll(".theme-btn");
-  if (!themeButtons || themeButtons.length === 0) return;
 
-  const validThemes = ["dark", "charcoal", "light"];
+  const validThemes = ["dark", "charcoal", "light", "neo", "carribean", "osaka"];
   const savedTheme = localStorage.getItem("dbj_rattlenix_theme") || "dark";
   const activeTheme = validThemes.includes(savedTheme) ? savedTheme : "dark";
 
   const applyTheme = (theme) => {
     document.documentElement.setAttribute("data-theme", theme);
-    themeButtons.forEach((btn) => {
-      const isMatch = btn.getAttribute("data-theme") === theme;
-      btn.classList.toggle("active", isMatch);
-    });
+    if (themeSelect) {
+      themeSelect.value = theme;
+    }
+    if (themeButtons && themeButtons.length > 0) {
+      themeButtons.forEach((btn) => {
+        const isMatch = btn.getAttribute("data-theme") === theme;
+        btn.classList.toggle("active", isMatch);
+      });
+    }
     try {
       localStorage.setItem("dbj_rattlenix_theme", theme);
     } catch (e) {}
@@ -459,14 +464,25 @@ function initThemeSwitcher() {
 
   applyTheme(activeTheme);
 
-  themeButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const targetTheme = btn.getAttribute("data-theme");
-      if (targetTheme && validThemes.includes(targetTheme)) {
-        applyTheme(targetTheme);
+  if (themeSelect) {
+    themeSelect.addEventListener("change", (e) => {
+      const selected = e.target.value;
+      if (selected && validThemes.includes(selected)) {
+        applyTheme(selected);
       }
     });
-  });
+  }
+
+  if (themeButtons && themeButtons.length > 0) {
+    themeButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetTheme = btn.getAttribute("data-theme");
+        if (targetTheme && validThemes.includes(targetTheme)) {
+          applyTheme(targetTheme);
+        }
+      });
+    });
+  }
 }
 
 function initEmojiPicker() {
